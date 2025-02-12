@@ -16,13 +16,14 @@ def plot_price_distribution(price):
 
  #Expected Revenue
 def expected_revenue_liquidity(S, π_I=0, π_LB=0.5, π_LS=0.5):
-    return (π_LB *(0.5 - 0.08 * S)) + (π_LS * (0.5 - 0.08 * S))
+    return S
 
 def expected_revenue_informed_trades(S, π_I = 0.4, π_LB=0.5, π_LS=0.5):
-    return  π_I * 0.4 + (π_LB * (0.5 - 0.08 * S)) + (π_LS * (0.5 - 0.08 *S))
+    return  S * (1- π_I)
 
 #Optimal Bid-Ask Prices
-def copeland_galai_bid_ask(P0, S_values):
-    bid_prices = [P0 - 0.08 * S for S in S_values]
-    ask_prices = [P0 + 0.08 * S for S in S_values]
+def copeland_galai_bid_ask(P0, S_values,π_I=0.4):
+    bid_prices = [(.5 - 0.08 * S) * (S * (1- π_I)) for S in S_values]
+    ask_prices = [(.5 + 0.08 * S) * (S * (1- π_I)) for S in S_values]
+
     return bid_prices, ask_prices
